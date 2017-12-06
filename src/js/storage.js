@@ -341,6 +341,14 @@ BadgerPen.prototype = {
     if (index > -1) {
       badger.userAllow.splice(index, 1);
     }
+
+    // if unsetting userAction returns the domain's action map to all defaults,
+    // remove the action map for the domain
+    const actionMap = this.getBadgerStorageObject("action_map");
+    if (_.isEqual(actionMap.getItem(domain), _newActionMapObject())) {
+      log("Removing %s from action_map", domain);
+      actionMap.deleteItem(domain);
+    }
   }
 };
 
